@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addTask(taskText) {
       const li = document.createElement('li');
       li.innerHTML = `
+        <input type="checkbox" class="checkbox"/>
         <span>${taskText}</span>
         <button class="deleteBtn">Excluir</button>
       `;
