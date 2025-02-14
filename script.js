@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
       taskList.appendChild(li);
   
       // Marcar tarefa como concluída
-      li.querySelector('span').addEventListener('click', () => {
+      li.querySelector('.checkbox').addEventListener('click', () => {
         li.classList.toggle('completed');
       });
   
