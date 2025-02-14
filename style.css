@@ -72,7 +72,7 @@
     border-bottom: none;
   }
   
-  li.completed {
+  li.completed span {
     text-decoration: line-through;
     color: #888;
   }
