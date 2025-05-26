@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addTask(taskText);
         taskInput.value = '';
       }
+      saveTasks();
     });
   
     // Função para adicionar tarefa na lista
@@ -45,5 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter') {
         addTaskBtn.click();
       }
+      saveTasks();  
     });
   });
