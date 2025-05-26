@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
       li.querySelector('.deleteBtn').addEventListener('click', () => {
         li.remove();
       });
+        
+      saveTasks();
     }
   
     // Adicionar tarefa ao pressionar Enter
