@@ -8,44 +8,50 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveTasks() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-    // Função para adicionar tarefa
-    addTaskBtn.addEventListener('click', () => {
-      const taskText = taskInput.value.trim();
-      if (taskText !== '') {
-        addTask(taskText);
-        taskInput.value = '';
-      }
-      saveTasks();
-    });
-  
-    // Função para adicionar tarefa na lista
-    function addTask(taskText) {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <input type="checkbox" class="checkbox"/>
-        <span>${taskText}</span>
-        <button class="deleteBtn">Excluir</button>
-      `;
-      taskList.appendChild(li);
-  
-      // Marcar tarefa como concluída
-      li.querySelector('.checkbox').addEventListener('click', () => {
-        li.classList.toggle('completed');
-      });
-  
-      // Excluir tarefa
-      li.querySelector('.deleteBtn').addEventListener('click', () => {
-        li.remove();
-      });
-        
-      saveTasks();
+
+    function renderTasks() {
+        taskList.innerHTML = '';
+        tasks.forEach((task, idx) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <input type="checkbox" class="checkbox" ${task.completed ? 'checked' : ''}/>
+                <span>${task.text}</span>
+                <button class="deleteBtn">Excluir</button>
+            `;
+            if (task.completed) li.classList.add('completed');
+            taskList.appendChild(li);
+
+            // Marcar tarefa como concluída
+            li.querySelector('.checkbox').addEventListener('change', () => {
+                tasks[idx].completed = !tasks[idx].completed;
+                saveTasks();
+                renderTasks();
+            });
+
+            // Excluir tarefa
+            li.querySelector('.deleteBtn').addEventListener('click', () => {
+                tasks.splice(idx, 1);
+                saveTasks();
+                renderTasks();
+            });
+        });
     }
-  
-    // Adicionar tarefa ao pressionar Enter
-    taskInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        addTaskBtn.click();
-      }
-      saveTasks();  
+
+    addTaskBtn.addEventListener('click', () => {
+        const taskText = taskInput.value.trim();
+        if (taskText !== '') {
+            tasks.push({ text: taskText, completed: false });
+            saveTasks();
+            renderTasks();
+            taskInput.value = '';
+        }
     });
-  });
+
+    taskInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            addTaskBtn.click();
+        }
+    });
+
+    renderTasks();
+});
