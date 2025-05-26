@@ -2,7 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('taskInput');
     const addTaskBtn = document.getElementById('addTaskBtn');
     const taskList = document.getElementById('taskList');
-  
+
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    function saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
     // Função para adicionar tarefa
     addTaskBtn.addEventListener('click', () => {
       const taskText = taskInput.value.trim();
